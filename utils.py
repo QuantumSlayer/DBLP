@@ -26,7 +26,7 @@ class DBLP(object):
     
     def _get_soup(self, *args, **kwargs):
         """
-        Retrieve the website using get method in requests allowing proxy server.
+        Retrieve the website using get method in requests which allows proxy server.
         """
         if self.proxy:
             response = self.session.get(proxies=self.proxy, *args, **kwargs)
@@ -55,7 +55,7 @@ class DBLP(object):
     
     def select_author(self, author):
         """
-        Provide interactive selection from the author list.
+        Provide interactive selection from the author list in the command line.
         """
         num = len(author)
         print(str(num) + " author(s) found")
@@ -89,7 +89,7 @@ class DBLP(object):
     
     def write_to_csv(self, author, paper_list, location=""):
         """
-        Write a list of papers into a csv file.
+        Write a list of papers into a csv file. Location can be specified.
         """
         header = ["Number", "Authors", "Title", "Source"]
         filename = author + ".csv"
@@ -123,25 +123,18 @@ class App(DBLP):
         x_cordinate = int((screen_width/2) - (window_width/2))
         y_cordinate = int((screen_height/2) - (window_height/2))
         root.geometry("{}x{}+{}+{}".format(window_width, window_height, x_cordinate, y_cordinate))
-
         self.canvas1 = tk.Canvas(root, width = window_width, height = window_height)
         self.canvas1.pack()
-
         self.entry1 = tk.Entry(root, width=54) 
         self.canvas1.create_window(255, 20, window=self.entry1)
-
         self.button1 = tk.Button(text='Search', command=lambda: App._search(self))
         self.canvas1.create_window(450, 20, window=self.button1)
-
         self.label1 = tk.Label(root, text='Input a name:')
         self.canvas1.create_window(50, 20, window=self.label1)
-
         self.label2 = tk.Label(root)
         self.canvas1.create_window(240, 42, window=self.label2)
-        
         self.listbox1 = tk.Listbox(root, width=50, height=23)
         self.canvas1.create_window(240, 240, window=self.listbox1)
-
         self.button2 = tk.Button(text="Save", command=lambda: App._save(self))
         self.canvas1.create_window(240, 450, window=self.button2)
 
@@ -155,12 +148,12 @@ class App(DBLP):
             elif self.authors == 0:
                 self.label2.config(text="No matches for this name. Please try again.")
             else:
-                self.label2.config(text = str(len(self.authors)) + " author(s) found. Please select the author(s) to download.")
+                self.label2.config(text = str(len(self.authors)) + " author(s) found. Please select the author to download.")
                 for i, j in enumerate(self.authors):
                     self.listbox1.insert(tk.END, str(i+1) + ": " + j[0])
         except:
             messagebox.showerror("Error", "Connection failed. Please try again.")
-    
+
     def _save(self):
         try:
             entry = self.listbox1.get(self.listbox1.curselection()).split(":")
